@@ -1,5 +1,6 @@
 My Florida State Senator
 ==============
+*Visit [afterecon.com/portfolio](afterecon.com/portfolio) for a working demo.*
 
 Objectives
 --------------
@@ -7,9 +8,6 @@ Objectives
 - WordPress plug-in using PHP + jQuery AJAX in order to call a MySQL DB.
 - User submits information which is used to query DB and find their State Senator.
 - Right now it's used for Florida, but can be generalized to other states and races later on.
-
-*Please visit afterecon.com/portfolio to see a working demo.*
-*This plug-in currently only works for Florida zip codes. An example FL zip is 33141.*
 
 Setup
 --------------
