@@ -1,6 +1,6 @@
 My Florida State Senator
 ==============
-*Visit [afterecon.com/portfolio](afterecon.com/portfolio) for a working demo.*
+*Visit [afterecon.com/portfolio](http://afterecon.com/portfolio) for a working demo.*
 
 Objectives
 --------------
