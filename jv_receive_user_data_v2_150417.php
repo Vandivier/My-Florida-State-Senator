@@ -1,7 +1,12 @@
 <?php
-/** When user data is submitted, it is sent to this script for database transaction processing. **/
+/** Database processing of user submitted data in this script.
+ ** First, we configure DB then turn submitted data into a combined flat array.
+ **/
 if ($_POST["action"] == "user_form") {
-/* Configure DB then turn submitted data into combined flat array */
+		$db_location = 'localhost';
+		$db_username = 'ENTER_HERE';
+		$db_password = 'ENTER_HERE';
+		$db_name = 'ENTER_HERE';
 		$submitted_data = $_POST["action_data"];
 		$modified_data = str_replace("=","&", $submitted_data);
 		$modified_data = str_replace("+"," ", $modified_data);
@@ -11,7 +16,7 @@ if ($_POST["action"] == "user_form") {
 		$insertion_arr = array();
 		$fetched_result_collection = array();
 		$fetched_dists = array();
-		$body_text = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+		$body_text = "This text is the body copy for a pre-written email to send to the legislator.";
 		$body_text = rawurlencode($body_text);
 		for ($i = 0; $i < count($modified_data); $i+=2) {
 			$submit_key[] = $modified_data[$i];
@@ -19,24 +24,22 @@ if ($_POST["action"] == "user_form") {
 		}
 		$insertion_arr = array_combine($submit_key, $submit_value);
 
-/* insert if key array length. assisted by Pavel stackoverflow.com/questions/3338138/insert-all-post-data-into-mysql-using-php */
+/** Insert if key array length.
+ ** Assisted by Pavel stackoverflow.com/questions/3338138/insert-all-post-data-into-mysql-using-php
+ **/
 		if (count($modified_data) > 2) {
 
-/* decode email then send the auto mail */
+/* Decode submitted email address then send an automatic response email */
 			$insertion_arr['user_email'] = rawurldecode($insertion_arr['user_email']);
-			$ev_auto_message = '
-<html>
-<body>
+			$ev_auto_message = '<html><body>
 <div>
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+This text is the copy inside of the message which is sent automatically to the end user on signup.
 </div>
-</body>
-</html>
-';
+</body></html>';
 			$ev_auto_to = $insertion_arr['user_email'];
 			$ev_headers  = 'MIME-Version: 1.0' . "\r\n";
 			$ev_headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$ev_headers .= 'From: XXX <XXX@XXXXXXXX.com>' . "\r\n";
+			$ev_headers .= 'From: From Name <From@example.com>' . "\r\n";
 
 			mail($ev_auto_to, "Thank You", $ev_auto_message, $ev_headers);
 
@@ -56,11 +59,11 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 					echo '<div class="confirm_submit">Insertion Error.</div>';
 				}
 			}
-			$database_var = mysqli_connect('localhost','DB_USER','DB_PASS','DB_NAME');
-			insert_array($database_var, "TABLE_TO_SAVE_NAME", $insertion_arr);
+			$database_var = mysqli_connect($db_location,$db_username,$db_password,$db_name);
+			insert_array($database_var, "ev_signup", $insertion_arr);
 		}
 /* obtain rep dist based on user zip */
-		$database_var = mysqli_connect('localhost','DB_USER','DB_PASS','DB_NAME');
+		$database_var = mysqli_connect($db_location,$db_username,$db_password,$db_name);
 		if (!$database_var) { die( 'Could not connect to database. Error: ' . mysqli_error($database_var) ); }
 		$return_query = "SELECT * FROM ev_zip_dist WHERE rep_zip = '" . $insertion_arr['user_zip'] . "'";
 		$mysqli_result = mysqli_query($database_var, $return_query);

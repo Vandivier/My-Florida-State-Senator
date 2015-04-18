@@ -1,23 +1,24 @@
 My Florida State Senator
 ==============
 
-Demo
---------------
-Please visit afterecon.com/portfolio to see a working demo.
-
 Objectives
 --------------
-- Wordpress plug-in using PHP + jQuery AJAX in order to call a MySQL DB.
+- Let's an end user enter zip code to find their State Senator.
+- WordPress plug-in using PHP + jQuery AJAX in order to call a MySQL DB.
 - User submits information which is used to query DB and find their State Senator.
 - Right now it's used for Florida, but can be generalized to other states and races later on.
+
+*Please visit afterecon.com/portfolio to see a working demo.*
+*This plug-in currently only works for Florida zip codes. An example FL zip is 33141.*
 
 Setup
 --------------
 - Download the repository.
-- Zip the PHP files into a zip file and upload as a WordPress plug-in. Do not yet activate the plug-in.
 - ev_dist_rep, ev_signup, and ev_zip_dist are SQL tables. Import them into your SQL web database.
-- After importing the tables, connect your database by editing the PHP plug-in files and entering your password, etc.
-    - The code assumes a MySQLi connection.
-	- You can do this in the WordPress plug-in editor or wherever.
-- Then decide where you want the element to display in your website! Probably you will need to inject via jQuery. Maybe additional options will be added later.
-- Optionally, you can use, delete, or override the default styles for the form and output widget.
+- Configure your PHP files. Eventually you will be able to do this in a nice WP backend UI, but not yet.
+	- The code assumes a MySQLi connection. Enter MySQLi DB connection information at the top of the user data PHP file where the variables are defined as "ENTER_HERE".
+	- Enter preferred email configuration for the automatic response email for signups, or disable it.
+- Zip the PHP files into a zip file and upload as a WordPress plug-in.
+- Then decide where you want the element to display in your website.
+	- You select where elements are injected by using the classes .dynamic_area and .dynamic_area2.
+	- The app injects a short user form into .dynamic_area or a short user form into .dynamic_area2.
